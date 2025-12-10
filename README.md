@@ -1,131 +1,54 @@
-# Q&A System using BERT and Faiss Vector Database
+# Context-Aware Document Question Answering System
 
----
-
-### Table of Contents
-
-- [Q\&A System using BERT and Faiss Vector Database](#qa-system-using-bert-and-faiss-vector-database)
-    - [Table of Contents](#table-of-contents)
-  - [Overview](#overview)
-  - [Features](#features)
-  - [Installation](#installation)
-    - [Requirements](#requirements)
-    - [Setup](#setup)
-  - [Usage](#usage)
-    - [Streamlit Web App Interface](#streamlit-web-app-interface)
-  - [How it Works](#how-it-works)
-  - [Demo](#demo)
-    - [Extractive Q\&A](#extractive-qa)
-    - [Closed Generative Q\&A](#closed-generative-qa)
-  - [Acknowledgments](#acknowledgments)
+This project is a context-aware Question Answering (QA) system that lets you ask natural language questions over your own documents (e.g. notes, textbooks, or technical PDFs). It combines transformer-based text embeddings with a FAISS vector index to retrieve relevant passages and an extractive QA model to generate precise answers.
 
 ---
 
 ## Overview
 
-This project is a Question & Answer system implemented using DistilBERT for text representation and Faiss (Facebook AI Similarity Search) for efficient similarity search in a vector database. The system is designed to provide accurate and relevant answers to user queries by searching through a large collection of documents.
+The system works in three main stages:
 
-<p align = "center">
-    <img src="assets/faiss-index.png" alt="workflow" width="70%">
-</p>
+1. **Document Ingestion & Embedding**  
+   Documents are preprocessed and converted into dense vector representations using a DistilBERT-based model.
+
+2. **Vector Indexing with FAISS**  
+   These embeddings are stored in a FAISS index to enable fast semantic search over large collections of documents.
+
+3. **Question Answering**  
+   When a user asks a question, it is embedded, the most relevant document chunks are retrieved from the FAISS index, and an extractive QA model is used to generate the final answer along with supporting context.
+
+---
 
 ## Features
 
-- **DistilBERT-based Text Representation**: Utilizes the DistilBERT model to convert questions and documents into dense vector representations.
-  
-- **Faiss Vector Database**: Stores the vector representations of the documents for fast similarity search.
+- 🔍 **Semantic search** over custom document collections  
+- 🧠 **Transformer-based text embeddings** (DistilBERT)  
+- ⚡ **Fast similarity search** using FAISS vector database  
+- 💬 **Streamlit web interface** for interactive Q&A  
+- 📎 **Answer with supporting context** (relevant passage)  
+- 🧱 Modular code structure for training, indexing, and inference
 
-- **Efficient Retrieval**: Finds the most relevant documents to a given question by performing efficient similarity searches in the Faiss vector database.
+(Planned / in progress – customize based on what you add)
+- 💬 Chat-style multi-turn QA
+- 📊 Confidence scores for each answer
+- 🌐 Support for domain-specific or multilingual datasets
+
+---
+
+## Tech Stack
+
+- **Language & Frameworks:** Python, PyTorch  
+- **NLP:** Hugging Face Transformers, DistilBERT  
+- **Vector Search:** FAISS (Facebook AI Similarity Search)  
+- **Web UI:** Streamlit  
+- **Utilities:** NumPy, Pandas, Scikit-learn  
 
 ---
 
 ## Installation
 
-### Requirements
-
-- Python 3.x
-- PyTorch
-- Transformers
-- Faiss
-- Streamlit (for the web-based interface)
-
-### Setup
-
-1. Clone the repository:
+### 1. Clone the repository
 
 ```bash
-git clone https://github.com/VuBacktracking/bert-faiss-qa-sytem.git
-```
-
-2. Clone the repository:
-
-```bash
-pip install -r requirements.txt
-```
-
-3. Train and Download the DistilBERT model:
-
-```bash
-python3 trainer.py
-```
-**Note**: 
-You can check my model in the link: https://huggingface.co/vubacktracking/distilbert-base-uncased-finetuned-squad2
-
-4. Build the Faiss vector database:
-
-```bash
-python3 faiss_index.py
-```
-<p align = "center">
-    <img src="assets/faiss_index_file.png" alt="workflow" width="70%">
-</p>
-
----
-
-## Usage
-
-### Streamlit Web App Interface
-
-```bash
-streamlit run app.py
-```
-
----
-
-Open your web browser and navigate to `http://localhost:8501/` to use the web-based Q&A system.
-
-## How it Works
-  
-1. **BERT Embeddings**: 
-   - The preprocessed text is converted into vector embeddings using the DistilBERT model.
-
-2. **Faiss Indexing**: 
-   - The DistilBERT embeddings of the documents are indexed in the Faiss vector database.
-
-3. **Query Processing**: 
-   - When a user inputs a question, the question is converted into a DistilBERT embedding.
-   - Faiss is used to find the most similar embeddings (i.e., the most relevant documents) to the question embedding.
-  
-4. **Answer Extraction**: 
-   - The relevant documents are ranked, and the most relevant answer passages are extracted and presented to the user.
-
----
-
-## Demo
-
-### Extractive Q&A
-<p align = "center">
-    <img src="assets/demo2.png" alt="workflow" width="70%">
-</p>
-
-### Closed Generative Q&A
-<p align = "center">
-    <img src="assets/demo1.png" alt="workflow" width="70%">
-</p>
-
----
-
-## Acknowledgments
-
-- [Hugging Face Transformers](https://github.com/huggingface/transformers)
-- [Facebook AI Similarity Search (Faiss)](https://github.com/facebookresearch/faiss)
+git clone https://github.com/Boreddyakshithareddy3k/context-aware-document-qa.git
+cd context-aware-document-qa
